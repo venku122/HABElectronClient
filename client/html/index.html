@@ -22,7 +22,7 @@
     <div class="wrapper" >
       <header class="header" >
         <section class="container" >
-            <marquee scrollamount="100"><h1 class="title">HAB Data Client</h1></marquee>
+          <h1 class="title">HAB Data Client</h1>
         We are using node <script>document.write(process.versions.node)</script>,
         Chrome <script>document.write(process.versions.chrome)</script>,
         and Electron <script>document.write(process.versions.electron)</script>.
@@ -32,19 +32,32 @@
         <section class="container" id = "serialControls">
           <div class="row" >
             <div class="column column-33 column-offset-33" >
-            <label>Select Serial Port: <select>
-              <option value = "port1">Port1</option>
-            </select></label><br/>
-            <button id="connect">Connect to Remote</button>
+                <label>Select Serial Port: </label>
+                <select>
+                  <option value = "port1">Port1</option>
+                 </select><br/>
+            </div>
+          </div>
+          <div class="row" >
+            <div class="column column-20 column-offset-20">
+              <button id="connect" >Connect to Remote</button>
+            </div>
+            <div class="column column-20 column-offset-20">
+                <button id="pause" style="float: right">Pause</button>
             </div>
           </div>
         </section>
+
         <div class="container" >
-            <div class="terminal" id="arb">
+          <div class="column column-60 column-offset-20" >
+            <div class="row" >
+              <div class="terminal" id="arb">
                 <span class="prompt"></span>
+              </div>
             </div>
-            <button id="pause" >Pause</button>
+          </div>
         </div>
+
     </div>
     <script src="./../js/serialMonitor.js" type="text/javascript"></script>
   </body>
