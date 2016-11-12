@@ -1,5 +1,6 @@
 let SerialPort = require('serialport');
 
+
 const init = () => {
 	console.log("init called");
 	setupPage();
@@ -10,6 +11,7 @@ const setupPage = () => {
 
 
 	SerialPort.list(generatePortList);
+  console.log('hey');
 };
 
 const generatePortList = (err, ports) => {
@@ -17,7 +19,7 @@ const generatePortList = (err, ports) => {
 	let portList = document.querySelector("#portList");
 	if (ports.length <= 1) {
 		let node = document.createElement("p");
-		node.value = "No Serial Ports!"
+		  node.value = "No Serial Ports!";
 		portList.appendChild(node);
 	} else {
 		for (let i = 0; i < ports.length; i++) {
@@ -39,9 +41,17 @@ const setupPort = () => {
 	  console.log('open');
 	  sPort.on('data', function(data) {
 	      var a = packetToFloatArr(data);
+        $("")
 	      console.log(a[8]);
 	  });
 	});
+};
+
+const updateTerminal = (babyJesus) => {
+    $("#arb").terminal(function(command,term) {
+        console.log(babyJesus);
+        term.echo(babyJesus);
+    },{prompt: 'λ', name: 'prompt'});
 };
 
 /**
@@ -66,4 +76,5 @@ const packetToFloatArr = (byteData)  => {
     return floatArr;
 };
 
-window.onload = init;
+
+win.onload = init;
