@@ -5,16 +5,26 @@ var pauseFlag = false;
 
 var socket;
 let user = "debugClient";
-// let serverURL = "localhost:3000";
-let serverURL = "http://hab-web-client-hab-telemetry-server.app.csh.rit.edu/";
+let serverURL = "http://localhost:3000/";
+//let serverURL = "http://hab-web-client-hab-telemetry-server.app.csh.rit.edu/";
 const connectSocket = (e) => {
 	console.log('connect Socket');
 	socket = io(serverURL);
+	/*
+	while(socket.disconnected) {
+			socket = io(serverURL);
+			console.log('trying to connect');
+	}*/
 
+	console.log(socket);
 	socket.on('connect', () => {
 		console.log('connecting');
 
 		socket.emit('join', { name: user, type: 'dataSource' });
+	});
+
+	socket.on('broadcastData', (data) => {
+		console.log(`received data echoed back ${ data }`);
 	});
 };
 
@@ -57,7 +67,7 @@ const setupPage = () => {
       prompt: '',
       enabled: false,
       scrollOnEcho: true,
-      height:250 
+      height:250
   });
 
   $("#pause").click(function() {
@@ -104,7 +114,7 @@ const setupPort = () => {
 	  sPort.on('data', function(data) {
 	      var floatData = packetToFloatArr(data);
         if(!pauseFlag) {
-            term.echo(floatData);
+            term.echo(floatData[0]);
         }
 				sentDataViaSocket(floatData);
 	  });
