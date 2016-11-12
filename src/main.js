@@ -14,9 +14,9 @@ const createWindow = () => {
   win = new BrowserWindow({ width: 800, height: 600 });
 
   // load index.html
-  console.log(`${__dirname}/../client/index.html`);
+  console.log(`${__dirname}/../client/html/index.html`);
   win.loadURL(url.format({
-    pathname: `${__dirname}/../client/index.html`,
+    pathname: `${__dirname}/../client/html/index.html`,
     protocol: 'file:',
     slashes: true,
   }));
