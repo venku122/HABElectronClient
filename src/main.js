@@ -1,4 +1,9 @@
-const { app, BrowserWindow } = require('electron');
+const electron = require('electron')
+// Module to control application life.
+const app = electron.app
+// Module to create native browser window.
+const BrowserWindow = electron.BrowserWindow
+
 const path = require('path');
 const url = require('url');
 
@@ -9,8 +14,9 @@ const createWindow = () => {
   win = new BrowserWindow({ width: 800, height: 600 });
 
   // load index.html
+  console.log(`${__dirname}/../client/index.html`);
   win.loadURL(url.format({
-    pathname: path.join(`${__dirname}`, './client/index.html'),
+    pathname: `${__dirname}/../client/index.html`,
     protocol: 'file:',
     slashes: true,
   }));
