@@ -1,6 +1,7 @@
-//let SerialPort = require('serial-worker');
+let SerialPort = require('serial-worker');
 let io = require('socket.io-client');
 
+var pauseFlag = false;
 
 var socket;
 let user = "debugClient";
@@ -45,10 +46,19 @@ const setupPage = () => {
   $("#arb").terminal(function(c,t) {
       term = t;
   }, {
-      greeting: false,
+      greetings: '',
       onInit: function(t) {
           term = t;
-      }
+      },
+      outputLimit: 10,
+      prompt: '',
+      enabled: false,
+      scrollOnEcho: true,
+      height:250 
+  });
+
+  $("#pause").click(function() {
+    pauseFlag = !pauseFlag;
   });
 
 	SerialPort.list(generatePortList);
@@ -72,6 +82,14 @@ const generatePortList = (err, ports) => {
 	}
 };
 
+const fakeFloats = () => {
+    for (var i = 0; i < 10000; i++) {
+        if(!pauseFlag) {
+            term.echo(i);
+        }
+    }
+};
+
 const setupPort = () => {
 	let sPort = new SerialPort.SerialPort('COM4', {
 		baudrate: 9600,
@@ -82,18 +100,12 @@ const setupPort = () => {
 	  console.log('open');
 	  sPort.on('data', function(data) {
 	      var floatData = packetToFloatArr(data);
-        term.echo(floatData);
+        if(!pauseFlag) {
+            term.echo(floatData);
+        }
 				sentDataViaSocket(floatData);
-	      //console.log(a[0]);
 	  });
 	});
-};
-
-const updateTerminal = (babyJesus) => {
-    $("#arb").terminal(function(command,term) {
-        //console.log(babyJesus);
-        term.echo(babyJesus);
-    },{prompt: 'λ', name: 'prompt'});
 };
 
 /**
@@ -117,8 +129,5 @@ const packetToFloatArr = (byteData)  => {
 
     return floatArr;
 };
-
-
-
 
 window.onload = init;
