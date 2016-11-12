@@ -3,21 +3,61 @@
   <head>
     <meta charset="UTF-8">
     <title>HAB Data Client</title>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./../js/serialMonitor.js"></script>
     <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+    <script src="../js/jquery.terminal-0.11.13.min.js"></script>
+    <script src="../js/jquery.mousewheel-min.js"></script>
+    <link href="../css/jquery.terminal-0.11.13.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/milligram.min.css" >
+    <link rel="stylesheet"  href="../css/main.css" >
+
+    <script>if (window.module) module = window.module;</script>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <div class="wrapper" >
+      <header class="header" >
+        <section class="container" >
+        <h1 class="title">HAB Data Client</h1>
+        We are using node <script>document.write(process.versions.node)</script>,
+        Chrome <script>document.write(process.versions.chrome)</script>,
+        and Electron <script>document.write(process.versions.electron)</script>.
+        </section>
+      </header>
 
-    <section id = "serialControls">
-      <label>Select Serial Port: <select>
-        <option value = "port1">Port1</option>
-      </select></label><br/>
-      <button>Connect to Remote</button>
-    </section>
+        <section class="container" id = "serialControls">
+          <div class="row" >
+            <div class="column column-33 column-offset-33" >
+            <label>Select Serial Port: <select>
+              <option value = "port1">Port1</option>
+            </select></label><br/>
+            <button>Connect to Remote</button>
+            </div>
+          </div>
+        </section>
+        <div class="container" >
+            <div class="terminal" id="arb">
+                <span class="prompt" >#></span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+     window.onload = function() {
+     $(document).ready(function() {
+       $("#arb").terminal(function(command,term) {
+           if (command == 'test') {
+               term.echo("WOW");
+           } else {
+               term.echo("OTHER");
+           }
+       }, {prompt: '>', name: 'testo'});
+     });
+     };
+    </script>
   </body>
 </html>

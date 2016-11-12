@@ -26,6 +26,8 @@
     "eslint-plugin-react": "^6.2.2"
   },
   "dependencies": {
+    "jquery.terminal": "^0.11.13",
+    "milligram": "^1.2.0",
     "serialport": "^4.0.6",
     "socket.io": "^1.5.1"
   }

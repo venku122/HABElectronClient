@@ -8,12 +8,16 @@ sPort.on("open", function () {
   console.log('open');
   sPort.on('data', function(data) {
       var a = packetToFloatArr(data);
-      console.log(a[8]);
+      console.log(a);
   });
 });
 
 /**
  * Creates an array of 15 floats from binary buffer of length 60+
+ * @param {Buffer} byteData a buffer containing 60 or more bytes to be parsed
+ *    into a float array
+
+ * @return {Float32Array} 15 floats in a Float32Array
  */
 const packetToFloatArr = (byteData)  => {
     buffer = byteData.slice(0, 60);
