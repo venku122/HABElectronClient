@@ -1,4 +1,4 @@
-let SerialPort = require('serialport');
+let SerialPort = require('serial-worker').SerialPort;
 
 
 const init = () => {
