@@ -1,17 +1,51 @@
 let SerialPort = require('serial-worker');
+let io = require('socket.io-client');
 
+var socket;
+let user = "debugClient";
+let serverURL = "localhost:3000";
+const connectSocket = (e) => {
+	socket = io(serverURL);
+
+	socket.on('connect', () => {
+		console.log('connecting');
+
+		socket.emit('join', { name: user });
+	});
+};
 
 const init = () => {
 	console.log("init called");
 	setupPage();
 	setupPort();
+	setupSocket();
+};
+
+const setupSocket = () => {
+	// setup buttons
+
+	// connect socket
+	connectSocket();
+};
+
+const sentDataViaSocket = (data) => {
+	let dataPacket = {
+		dateCreated: Date.now,
+		buffer: data,
+		name: user,
+	};
+
+	socket.emit('sensorData', dataPacket, function (response) {
+		console.log(response);
+	});
+	console.log(`Data sent over socket to ${serverURL}: ${dataPacket}`);
 };
 
 const setupPage = () => {
 
 
 	SerialPort.list(generatePortList);
-  console.log('hey');
+  //console.log('hey');
 };
 
 const generatePortList = (err, ports) => {
@@ -41,16 +75,17 @@ const setupPort = () => {
 	sPort.on("open", function () {
 	  console.log('open');
 	  sPort.on('data', function(data) {
-	      var a = packetToFloatArr(data);
+	      var floatData = packetToFloatArr(data);
         $("")
-	      console.log(a[0]);
+				sentDataViaSocket(floatData)
+	      //console.log(a[0]);
 	  });
 	});
 };
 
 const updateTerminal = (babyJesus) => {
     $("#arb").terminal(function(command,term) {
-        console.log(babyJesus);
+        //console.log(babyJesus);
         term.echo(babyJesus);
     },{prompt: 'λ', name: 'prompt'});
 };
@@ -76,6 +111,8 @@ const packetToFloatArr = (byteData)  => {
 
     return floatArr;
 };
+
+
 
 
 window.onload = init;
