@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>HAB Data Client</title>
-    <script src="/socket.io/socket.io.js"></script>
+  <!--  <script src="/socket.io/socket.io.js"></script> -->
     <script src="./../js/serialMonitor.js"></script>
     <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
   </head>
@@ -14,7 +14,8 @@
     and Electron <script>document.write(process.versions.electron)</script>.
 
     <section id = "serialControls">
-      <label>Select Serial Port: <select>
+      <label>Select Serial Port:
+        <select id = "portList">
         <option value = "port1">Port1</option>
       </select></label><br/>
       <button>Connect to Remote</button>

@@ -1,16 +1,48 @@
-var SerialPort = require('serialport');
-var sPort = new SerialPort('/dev/ttyACM0', {
-	baudrate: 9600,
-	parser: SerialPort.parsers.raw
-});
+let SerialPort = require('serialport');
 
-sPort.on("open", function () {
-  console.log('open');
-  sPort.on('data', function(data) {
-      var a = packetToFloatArr(data);
-      console.log(a[8]);
-  });
-});
+const init = () => {
+	console.log("init called");
+	setupPage();
+	setupPort();
+};
+
+const setupPage = () => {
+
+
+	SerialPort.list(generatePortList);
+};
+
+const generatePortList = (err, ports) => {
+	console.log("generatePortList");
+	let portList = document.querySelector("#portList");
+	if (ports.length <= 1) {
+		let node = document.createElement("p");
+		node.value = "No Serial Ports!"
+		portList.appendChild(node);
+	} else {
+		for (let i = 0; i < ports.length; i++) {
+			let node = document.createElement('option');
+			node.value = ports[i].comName;
+			node.text = ports[i].comName;
+			portList.appendChild(node);
+		}
+	}
+};
+
+const setupPort = () => {
+	let sPort = new SerialPort('/dev/ttyACM0', {
+		baudrate: 9600,
+		parser: SerialPort.parsers.raw
+	});
+
+	sPort.on("open", function () {
+	  console.log('open');
+	  sPort.on('data', function(data) {
+	      var a = packetToFloatArr(data);
+	      console.log(a[8]);
+	  });
+	});
+};
 
 /**
  * Creates an array of 15 floats from binary buffer of length 60+
@@ -33,3 +65,5 @@ const packetToFloatArr = (byteData)  => {
 
     return floatArr;
 };
+
+window.onload = init;
