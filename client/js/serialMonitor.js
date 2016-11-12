@@ -1,4 +1,4 @@
-let SerialPort = require('serial-worker').SerialPort;
+let SerialPort = require('serial-worker');
 
 
 const init = () => {
@@ -16,6 +16,7 @@ const setupPage = () => {
 
 const generatePortList = (err, ports) => {
 	console.log("generatePortList");
+	console.log(ports);
 	let portList = document.querySelector("#portList");
 	if (ports.length <= 1) {
 		let node = document.createElement("p");
@@ -32,7 +33,7 @@ const generatePortList = (err, ports) => {
 };
 
 const setupPort = () => {
-	let sPort = new SerialPort('/dev/ttyACM0', {
+	let sPort = new SerialPort.SerialPort('COM4', {
 		baudrate: 9600,
 		parser: SerialPort.parsers.raw
 	});
@@ -42,7 +43,7 @@ const setupPort = () => {
 	  sPort.on('data', function(data) {
 	      var a = packetToFloatArr(data);
         $("")
-	      console.log(a[8]);
+	      console.log(a[0]);
 	  });
 	});
 };
@@ -77,4 +78,4 @@ const packetToFloatArr = (byteData)  => {
 };
 
 
-win.onload = init;
+window.onload = init;
