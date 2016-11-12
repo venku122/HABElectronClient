@@ -67,7 +67,9 @@ const setupPage = () => {
       prompt: '',
       enabled: false,
       scrollOnEcho: true,
-      height:250
+      height:250,
+      width: '100%'
+
   });
 
   $("#pause").click(function() {
