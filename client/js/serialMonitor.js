@@ -1,5 +1,6 @@
-let SerialPort = require('serial-worker');
+//let SerialPort = require('serial-worker');
 let io = require('socket.io-client');
+
 
 var socket;
 let user = "debugClient";
@@ -15,7 +16,6 @@ const connectSocket = (e) => {
 };
 
 const init = () => {
-	console.log("init called");
 	setupPage();
 	setupPort();
 	setupSocket();
@@ -42,10 +42,16 @@ const sentDataViaSocket = (data) => {
 };
 
 const setupPage = () => {
-
+  $("#arb").terminal(function(c,t) {
+      term = t;
+  }, {
+      greeting: false,
+      onInit: function(t) {
+          term = t;
+      }
+  });
 
 	SerialPort.list(generatePortList);
-  //console.log('hey');
 };
 
 const generatePortList = (err, ports) => {
@@ -76,8 +82,8 @@ const setupPort = () => {
 	  console.log('open');
 	  sPort.on('data', function(data) {
 	      var floatData = packetToFloatArr(data);
-        $("")
-				sentDataViaSocket(floatData)
+        term.echo(floatData);
+				sentDataViaSocket(floatData);
 	      //console.log(a[0]);
 	  });
 	});
