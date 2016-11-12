@@ -1,11 +1,13 @@
-//let SerialPort = require('serial-worker');
+let SerialPort = require('serial-worker');
 let io = require('socket.io-client');
 
 
 var socket;
 let user = "debugClient";
-let serverURL = "localhost:3000";
+// let serverURL = "localhost:3000";
+let serverURL = "http://hab-web-client-hab-telemetry-server.app.csh.rit.edu/";
 const connectSocket = (e) => {
+	console.log('connect Socket');
 	socket = io(serverURL);
 
 	socket.on('connect', () => {
@@ -22,6 +24,7 @@ const init = () => {
 };
 
 const setupSocket = () => {
+	console.log('setup Socket');
 	// setup buttons
 
 	// connect socket
