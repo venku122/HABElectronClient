@@ -10,7 +10,7 @@ const connectSocket = (e) => {
 	socket.on('connect', () => {
 		console.log('connecting');
 
-		socket.emit('join', { name: user });
+		socket.emit('join', { name: user, type: 'dataSource' });
 	});
 };
 
