@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/RIT-Space-Exploration/HABElectronClient#readme",
   "devDependencies": {
+    "electron-packager": "^8.2.0",
     "eslint": "^3.5.0",
     "eslint-config-airbnb": "^11.1.0",
     "eslint-plugin-import": "^1.15.0",

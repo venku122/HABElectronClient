@@ -40,7 +40,7 @@ const setupSocket = () => {
 
 	// connect socket
 	connectSocket();
-	SerialPort.list(generatePortList);
+	SerialPort.SerialPort.list(generatePortList);
 };
 
 const sentDataViaSocket = (data) => {
@@ -78,6 +78,7 @@ const setupPage = () => {
     $("#urlselect").on('change', function() {
         serverURL = this.value;
         console.log(serverURL);
+				setupSocket();
     });
 
   $("#arb").terminal(function(c,t) {
