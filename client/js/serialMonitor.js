@@ -40,6 +40,7 @@ const setupSocket = () => {
 
 	// connect socket
 	connectSocket();
+	SerialPort.list(generatePortList);
 };
 
 const sentDataViaSocket = (data) => {
@@ -53,6 +54,24 @@ const sentDataViaSocket = (data) => {
 		console.log(response);
 	});
 	console.log(`Data sent over socket to ${serverURL}: ${dataPacket}`);
+};
+
+const generatePortList = (err, ports) => {
+	console.log("generatePortList");
+	console.log(ports);
+	let portList = document.querySelector("#portList");
+	if (ports.length <= 1) {
+		let node = document.createElement("p");
+		  node.value = "No Serial Ports!";
+		portList.appendChild(node);
+	} else {
+		for (let i = 0; i < ports.length; i++) {
+			let node = document.createElement('option');
+			node.value = ports[i].comName;
+			node.text = ports[i].comName;
+			portList.appendChild(node);
+		}
+	}
 };
 
 const setupPage = () => {
@@ -74,29 +93,19 @@ const setupPage = () => {
 
   $("#pause").click(function() {
     pauseFlag = !pauseFlag;
+
+		SerialPort.list(function (err, ports) {
+		ports.forEach(function(port) {
+			console.log(port.comName);
+			console.log(port.pnpId);
+			console.log(port.manufacturer);
+		});
+	});
   });
 
-	SerialPort.SerialPort.list(generatePortList);
-};
+	SerialPort.list(generatePortList);
 
-const generatePortList = (err, ports) => {
-	console.log("generatePortList");
-	console.log(ports);
-	let portList = document.querySelector("#portList");
-	if (ports.length <= 1) {
-		let node = document.createElement("p");
-		  node.value = "No Serial Ports!";
-		portList.appendChild(node);
-	} else {
-		for (let i = 0; i < ports.length; i++) {
-			let node = document.createElement('option');
-			node.value = ports[i].comName;
-			node.text = ports[i].comName;
-			portList.appendChild(node);
-		}
-	}
 };
-
 
 const setupPort = () => {
 	let sPort = new SerialPort.SerialPort('COM4', {
