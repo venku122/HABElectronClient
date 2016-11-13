@@ -68,7 +68,7 @@ const setupPage = () => {
       enabled: false,
       scrollOnEcho: true,
       height:250,
-      width: '100%'
+      //width: '100%'
 
   });
 
@@ -76,7 +76,7 @@ const setupPage = () => {
     pauseFlag = !pauseFlag;
   });
 
-	SerialPort.list(generatePortList);
+	SerialPort.SerialPort.list(generatePortList);
 };
 
 const generatePortList = (err, ports) => {
