@@ -37,10 +37,10 @@ const init = () => {
 const setupSocket = () => {
 	console.log('setup Socket');
 	// setup buttons
-
+	SerialPort.SerialPort.list(generatePortList);
 	// connect socket
 	connectSocket();
-	SerialPort.SerialPort.list(generatePortList);
+
 };
 
 const sentDataViaSocket = (data) => {
@@ -60,7 +60,7 @@ const generatePortList = (err, ports) => {
 	console.log("generatePortList");
 	console.log(ports);
 	let portList = document.querySelector("#portList");
-	if (ports.length <= 1) {
+	if (ports.length <= 0) {
 		let node = document.createElement("p");
 		  node.value = "No Serial Ports!";
 		portList.appendChild(node);
@@ -78,8 +78,12 @@ const setupPage = () => {
     $("#urlselect").on('change', function() {
         serverURL = this.value;
         console.log(serverURL);
-				setupSocket();
+				//setupSocket();
     });
+
+		$("#connect").on('click', () => {
+			setupSocket();
+		});
 
   $("#arb").terminal(function(c,t) {
       term = t;
