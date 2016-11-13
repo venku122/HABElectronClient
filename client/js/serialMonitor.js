@@ -148,7 +148,13 @@ const packetToFloatArr = (byteData)  => {
 };
 
 const printFloatArr = (arr) => {
-    term.echo("[]Δt: " + arr[0] + "[]" + "°C: " + "[]");
+    term.echo("|Δt: " + arr[0] + "s|temp: " + arr[1] + "°C|pres: "
+              + arr[2] + "Pa|alt: " + arr[3] + "m|hum: " + arr[4]
+              + "%|gx: ");
+    term.echo("" + arr[5] + "°|gy: " + arr[6] + "°|gz: " + arr[7]
+              + "°|ax: " + arr[8] + "°|ay: " + arr[9] + "°|az: " + arr[10]
+              + "°|mx: " + arr[11] +  "°|my: " + arr[12] + "°|mz: " + arr[13]
+              + "°|temp: " + arr[14] + "°|");
 };
 
 window.onload = init;
