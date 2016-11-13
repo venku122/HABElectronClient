@@ -9,23 +9,22 @@ let serverURL = "http://localhost:3000/";
 //let serverURL = "http://hab-web-client-hab-telemetry-server.app.csh.rit.edu/";
 const connectSocket = (e) => {
 	console.log('connect Socket');
+
 	socket = io(serverURL);
-	/*
-	while(socket.disconnected) {
-			socket = io(serverURL);
-			console.log('trying to connect');
-	}*/
+	socket.off();
+	if(socket.disconnected || !socket) {
 
-	console.log(socket);
-	socket.on('connect', () => {
-		console.log('connecting');
+		console.log(socket);
+		socket.on('connect', () => {
+			console.log('connecting');
 
-		socket.emit('join', { name: user, type: 'dataSource' });
-	});
+			socket.emit('join', { name: user, type: 'dataSource' });
+		});
 
-	socket.on('broadcastData', (data) => {
-		console.log(`received data echoed back ${ data }`);
-	});
+		socket.on('broadcastData', (data) => {
+			console.log(`received data echoed back ${ data }`);
+		});
+	}
 };
 
 const init = () => {
@@ -39,7 +38,7 @@ const setupSocket = () => {
 	// setup buttons
 	SerialPort.SerialPort.list(generatePortList);
 	// connect socket
-	connectSocket();
+	//connectSocket();
 
 };
 
@@ -60,16 +59,20 @@ const generatePortList = (err, ports) => {
 	console.log("generatePortList");
 	console.log(ports);
 	let portList = document.querySelector("#portList");
-	if (ports.length <= 0) {
+	if (ports.length >= 0) {
+		/*
 		let node = document.createElement("p");
 		  node.value = "No Serial Ports!";
-		portList.appendChild(node);
-	} else {
+			node.id = "placeholder"
+			portList.appendChild(node);
+	}*/
 		for (let i = 0; i < ports.length; i++) {
-			let node = document.createElement('option');
+			let node = document.createElement("option");
+			console.log(ports[i].comName);
 			node.value = ports[i].comName;
 			node.text = ports[i].comName;
-			portList.appendChild(node);
+			console.log(node);
+			portList.add(node);
 		}
 	}
 };
@@ -82,8 +85,15 @@ const setupPage = () => {
     });
 
 		$("#connect").on('click', () => {
-			setupSocket();
+			//setupSocket();
+			connectSocket();
 		});
+
+		/*
+		$("#portList").on('onmouseover', () => {
+			//	setupSocket();
+			generatePortList();
+		});*/
 
   $("#arb").terminal(function(c,t) {
       term = t;
@@ -103,14 +113,6 @@ const setupPage = () => {
 
   $("#pause").click(function() {
     pauseFlag = !pauseFlag;
-
-		SerialPort.list(function (err, ports) {
-		ports.forEach(function(port) {
-			console.log(port.comName);
-			console.log(port.pnpId);
-			console.log(port.manufacturer);
-		});
-	});
   });
 
 	SerialPort.list(generatePortList);
@@ -118,7 +120,9 @@ const setupPage = () => {
 };
 
 const setupPort = () => {
-	let sPort = new SerialPort.SerialPort('COM4', {
+	//let portName = $("portList").val();
+	let portName = 'Com3';
+	let sPort = new SerialPort.SerialPort(portName, {
 		baudrate: 9600,
 		parser: SerialPort.parsers.raw
 	});
