@@ -75,6 +75,11 @@ const generatePortList = (err, ports) => {
 };
 
 const setupPage = () => {
+    $("#urlselect").on('change', function() {
+        serverURL = this.value;
+        console.log(serverURL);
+    });
+
   $("#arb").terminal(function(c,t) {
       term = t;
   }, {
@@ -148,13 +153,15 @@ const packetToFloatArr = (byteData)  => {
 };
 
 const printFloatArr = (arr) => {
-    term.echo("|Δt: " + arr[0] + "s|temp: " + arr[1] + "°C|pres: "
-              + arr[2] + "Pa|alt: " + arr[3] + "m|hum: " + arr[4]
-              + "%|gx: ");
-    term.echo("" + arr[5] + "°|gy: " + arr[6] + "°|gz: " + arr[7]
-              + "°|ax: " + arr[8] + "°|ay: " + arr[9] + "°|az: " + arr[10]
-              + "°|mx: " + arr[11] +  "°|my: " + arr[12] + "°|mz: " + arr[13]
-              + "°|temp: " + arr[14] + "°|");
+    term.echo("|Δt: " + arr[0].toFixed(2) + "s|temp: " + arr[1].toFixed(2) + "°C|pres: "
+              + arr[2].toFixed(2) + "Pa|alt: " + arr[3].toFixed(2)
+              + "m|hum: " + arr[4].toFixed() + "%|gx: ");
+    term.echo("" + arr[5].toFixed(2) + "°|gy: " + arr[6].toFixed(2)
+              + "°|gz: " + arr[7].toFixed(2) + "°|ax: " + arr[8].toFixed(2)
+              + "°|ay: " + arr[9].toFixed(2) + "°|az: " + arr[10].toFixed(2)
+              + "°|mx: " + arr[11].toFixed(2) +  "°|my: " + arr[12].toFixed(2)
+              + "°|mz: " + arr[13].toFixed(2) + "°|temp: "
+              + arr[14].toFixed(2) + "°|");
 };
 
 window.onload = init;
