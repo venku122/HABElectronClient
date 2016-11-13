@@ -97,13 +97,6 @@ const generatePortList = (err, ports) => {
 	}
 };
 
-const fakeFloats = () => {
-    for (var i = 0; i < 10000; i++) {
-        if(!pauseFlag) {
-            term.echo(i);
-        }
-    }
-};
 
 const setupPort = () => {
 	let sPort = new SerialPort.SerialPort('COM4', {
@@ -116,7 +109,7 @@ const setupPort = () => {
 	  sPort.on('data', function(data) {
 	      var floatData = packetToFloatArr(data);
         if(!pauseFlag) {
-            term.echo(floatData[0]);
+            printFloatArr(floatData);
         }
 				sentDataViaSocket(floatData);
 	  });
@@ -143,6 +136,10 @@ const packetToFloatArr = (byteData)  => {
     }
 
     return floatArr;
+};
+
+const printFloatArr = (arr) => {
+    term.echo("[]Δt: " + arr[0] + "[]" + "°C: " + "[]");
 };
 
 window.onload = init;
