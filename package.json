@@ -1,7 +1,7 @@
 {
-  "name": "hab-electron-client",
+  "name": "hab-console-telemetry-client",
   "version": "1.0.0",
-  "description": "Thin client for capturing serial output of HAB project",
+  "description": "Console client for capturing serial output of HAB project",
   "main": "./src/main.js",
   "scripts": {
     "test": "eslint ./src",
@@ -9,31 +9,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RIT-Space-Exploration/HABElectronClient.git"
+    "url": "git+https://github.com/venku122/HABTelemetryConsoleClient.git"
   },
   "author": "RIT Space Exploration",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RIT-Space-Exploration/HABElectronClient/issues"
+    "url": "https://github.com/venku122/HABTelemetryConsoleClient/issues"
   },
-  "homepage": "https://github.com/RIT-Space-Exploration/HABElectronClient#readme",
+  "homepage": "https://github.com/venku122/HABTelemetryConsoleClient#readme",
+  "dependencies": {
+    "serialport": "^4.0.6",
+    "socket.io": "^1.6.0",
+    "socket.io-client": "^1.6.0"
+  },
   "devDependencies": {
-    "electron-packager": "^8.2.0",
-    "eslint": "^3.5.0",
+    "eslint": "^3.11.0",
     "eslint-config-airbnb": "^11.1.0",
     "eslint-plugin-import": "^1.15.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.2.2",
-    "node-gyp": "^3.4.0",
-    "node-pre-gyp": "^0.6.29",
-    "require-rebuild": "^1.2.8"
-  },
-  "dependencies": {
-    "electron": "^1.4.6",
-    "jquery.terminal": "^0.11.13",
-    "milligram": "^1.2.0",
-    "serial-worker": "^1.0.5",
-    "socket.io": "^1.5.1",
-    "socket.io-client": "^1.5.1"
+    "eslint-plugin-react": "^6.2.2"
   }
 }
